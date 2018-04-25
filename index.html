@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <!--[if IE]>
+        <div id="warning">
+        <h4 class="red">Your Browser Is Not Supported!</h4><br />
+        <p>Google's <a href='https://www.google.com/chrome/browser/'>Chrome</a> browser is recommended. Thank You!&nbsp;&nbsp;&nbsp;<a href="#" onClick="document.getElementById('warning').style.display = 'none';"><b>Close Window</b></a></p>
+        </div>
+        <script>
+        window.stop();
+        </script>
+        <!--
+      <![endif]-->
+
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+      <title>Book Battle [default] - Practice Quiz</title>
+      <style>
+      div#quiz_execution {
+        display: none;
+      }
+      </style>
+
+      <!-- Pull Bootstrap resources -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="libraries/bootstrap.min.css">
+
+        <!-- Bootstrap setup -->
+        <script type="text/javascript" src="bootstrap.js"></script>
+
+        <!-- Speech resources -->
+        <script src="libraries/p5.js"></script>
+        <script src="libraries/p5.speech.js"></script>
+
+        <!-- Speech setup -->
+        <script type="text/javascript" src="speech.js"></script>
+
+		    <!-- Data types -->
+        <script type="text/javascript" src="dataTypes.js"></script>
+
+        <!-- Data Sets -->
+        <script type="text/javascript" src="data/dataset_zero.js"></script>
+		    <script type="text/javascript" src="data/dataset_one.js"></script>
+		    <script type="text/javascript" src="data/dataset_two.js"></script>
+		    <script type="text/javascript" src="data/dataset_three.js"></script>
+		    <script type="text/javascript" src="data/dataset_four.js"></script>
+		    <script type="text/javascript" src="data/dataset_five.js"></script>
+		    <script type="text/javascript" src="data/dataset_six.js"></script>
+		    <script type="text/javascript" src="data/dataset_seven.js"></script>
+		    <script type="text/javascript" src="data/dataset_eight.js"></script>
+		    <script type="text/javascript" src="data/dataset_nine.js"></script>
+		    <script type="text/javascript" src="data/dataset_ten.js"></script>
+		    <script type="text/javascript" src="data/dataset_eleven.js"></script>
+		    <script type="text/javascript" src="data/dataset_twelve.js"></script>
+		    <script type="text/javascript" src="data/dataset_thirteen.js"></script>
+
+        <!-- Utility functions and var setup -->
+		    <script type="text/javascript" src="init.js"></script>
+		    <script type="text/javascript" src="pagecontrol.js"></script>
+
+        <!-- Main program -->
+		    <script type="text/javascript" src="main.js"></script>
+    </head>
+
+    <body id="body_main">
+
+
+<div class="container text-center justify-content-center">
+  <div class="row">
+    <div class="col-xs-1"><!--spacer--></div>
+    <div class="col-xs-2 bg-success text-left" id="ref_titles">
+      <h4 id="titleRef" style="display:none">Book Titles</h4>
+    </div>
+    <div class="col-xs-6 bg-info text-info">
+      <div class="well" align="center">
+        <h1>Battle of the Books [default] Quiz</h1>
+        <div id="mainMenu" style="text-align:left"></div>
+        <br>
+        <button type="button" class="btn btn-primary btn-block" id="cmd_start_quiz">Start quiz!</button>
+        <div id="options" style="text-align:left; display:none">
+
+
+        <p>
+          <!-- this.questionCount = options[2];  // integer value, -1 is infinite -->
+          <div class="radio">
+            <b>Total question count:</b>
+            <label class="radio">
+              <input type="radio" name="questionCount" id="questionCount1" value="-1" checked>
+              Infinite
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="questionCount" id="questionCount2" value="25">
+              25
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="questionCount" id="questionCount3" value="35">
+              35
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="questionCount" id="questionCount4" value="50">
+              50
+            </label>
+          </div>
+        </p>
+
+        <p>
+          <!-- this.questionTimer = options[3];  // integer value, -1 is no timer -->
+          <div class="radio">
+          <b>Question timer duration:</b>
+          <label class="radio">
+            <input type="radio" name="questionTimer" id="questionTimer1" value="-1" checked>
+            No Timer
+          </label>
+        </div>
+        <div class="radio">
+          <label class="radio">
+            <input type="radio" name="questionTimer" id="questionTimer2" value="15">
+            15 seconds
+          </label>
+        </div>
+        <div class="radio">
+          <label class="radio">
+            <input type="radio" name="questionTimer" id="questionTimer3" value="30">
+            30 seconds
+          </label>
+        </div>
+        <div class="radio">
+          <label class="radio">
+            <input type="radio" name="questionTimer" id="questionTimer4" value="45">
+            45 seconds
+          </label>
+        </div>
+        </p>
+
+        <p>
+          <!-- this.answerType = options[5]      // 0 no details, 1 is a break, 2 correct/incorrect, 3 is full -->
+          <div class="radio">
+            <b>Grading response type:</b>
+            <label class="radio">
+              <input type="radio" name="answerType" id="answerType1" value="0">
+              None
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="answerType" id="answerType2" value="1">
+              Just a break
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="answerType" id="answerType3" value="2">
+              Correct or Incorrect
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="answerType" id="answerType4" value="3" checked>
+              Points
+            </label>
+          </div>
+        </p>
+
+        <p>
+          <!-- this.answerTimer = options[6];    // integer value, -1 is no timer -->
+
+          <div class="radio">
+            <b>Answer timer duration:</b>
+            <label class="radio">
+              <input type="radio" name="answerTimer" id="answerTimer1" value="-1" checked>
+              No Timer
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="answerTimer" id="answerTimer2" value="15">
+              5 seconds
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="answerTimer" id="answerTimer3" value="30">
+              15 seconds
+            </label>
+          </div>
+          <div class="radio">
+            <label class="radio">
+              <input type="radio" name="answerTimer" id="answerTimer4" value="45">
+              30 seconds
+            </label>
+          </div>
+        </p>
+
+          <!-- this.answerInput = options[7];    // 0 MC, 1 write-in, 2 MC w/ chapter, 3 write-in w/ chapter -->
+          <!-- no plans to implement -->
+
+        <p>
+        <!-- this.questionType = options[1];   // true is spoken, false is text -->
+          <div class="radio-inline">
+            <b>Show question text?</b>
+            <label class="radio-inline">
+              <input type="radio" name="questionType" id="questionType1" value="true" checked>
+              Yes
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label class="radio-inline">
+              <input type="radio" name="questionType" id="questionType2" value="false">
+              No
+            </label>
+          </div>
+        </p>
+
+        <p>
+          <!-- this.questionRepeat = options[4]; // false is no repeated values, true allows repeats -->
+          <div class="radio-inline">
+            <b>Allow repeat questions?</b>
+            <label class="radio-inline">
+              <input type="radio" name="questionRepeat" id="questionRepeat1" value="true">
+              Yes
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label class="radio-inline">
+              <input type="radio" name="questionRepeat" id="questionRepeat2" value="false" checked>
+              No
+            </label>
+          </div>
+        </p>
+
+        <p>
+          <!-- this.generalSound = options[8];       // false no sound, true has sound -->
+          <div class="radio-inline">
+            <b>Read questions aloud?</b>
+            <label class="radio-inline">
+              <input type="radio" name="generalSound" id="generalSound1" value="true" checked>
+              Yes
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label class="radio-inline">
+              <input type="radio" name="generalSound" id="generalSound2" value="false">
+              No
+            </label>
+          </div>
+        </p>
+
+        <p>
+          <!-- this.generalProgressBar = options[9]; // false no bar, true has bar -->
+          <div class="radio-inline">
+            <b>Show progress block?</b>
+            <label class="radio-inline">
+              <input type="radio" name="generalProgressBar" id="generalProgressBar1" value="true" checked>
+              Yes
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label class="radio-inline">
+              <input type="radio" name="generalProgressBar" id="generalProgressBar2" value="false">
+              No
+            </label>
+          </div>
+        </p>
+
+        <p>
+          <!-- this.generalTimer = options[10];      // false timer not displayed, true timer displayed -->
+          <div class="radio-inline">
+            <b>Show question timer?</b>
+            <label class="radio-inline">
+              <input type="radio" name="generalTimer" id="generalTimer1" value="true">
+              Yes
+            </label>
+          </div>
+          <div class="radio-inline">
+            <label class="radio-inline">
+              <input type="radio" name="generalTimer" id="generalTimer2" value="false" checked>
+              No
+            </label>
+          </div>
+        </p>
+
+        </div>
+        <button type="button" class="btn btn-warning btn-block" id="reset_quiz" style="display:none">Reset quiz</button>
+      </div>
+
+      <div class="row">
+        <div class="col" id="questions">
+          <img class="img-responsive" style="display: none; margin-left: auto; margin-right: auto;" id="qSpeaker" alt="Listen Closely" src="libraries/publicdomainspeaker.png">
+          <blockquote id="qBlock" style="display:none"></blockquote>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" id="answers_titles">
+          <div id="answerBlock" style="display:none">
+          </div>
+          <div id="titleSelect" style="display:none">
+          <h4>Title:</h4>
+          <div class="btn-group" data-toggle="buttons">
+            <div data-toggle="buttons" id="title_buttons">
+                  <div class="btn-group btn-group-justified">
+                    <label class="btn btn-default active" id="title_blank">
+                      <input type="radio"> Leave Blank
+                    </label>
+                  </div>
+                  <div class="btn-group btn-group-justified">
+                    <label class="btn btn-default" id="1">
+                      <input type="radio"> 1
+                    </label>
+                    <label class="btn btn-default" id="2">
+                      <input type="radio"> 2
+                    </label>
+                    <label class="btn btn-default" id="3">
+                      <input type="radio"> 3
+                    </label>
+                    <label class="btn btn-default" id="4">
+                      <input type="radio"> 4
+                    </label>
+                    <label class="btn btn-default" id="5">
+                      <input type="radio"> 5
+                    </label>
+                    <label class="btn btn-default" id="6">
+                      <input type="radio"> 6
+                    </label>
+                    <label class="btn btn-default" id="7">
+                      <input type="radio"> 7
+                    </label>
+                    <label class="btn btn-default" id="8">
+                      <input type="radio"> 8
+                    </label>
+                    <label class="btn btn-default" id="9">
+                      <input type="radio"> 9
+                    </label>
+                    <label class="btn btn-default" id="10">
+                      <input type="radio"> 10
+                    </label>
+                  </div>
+                  <div class="btn-group btn-group-justified">
+                    <label class="btn btn-default" id="11">
+                      <input type="radio"> 11
+                    </label>
+                    <label class="btn btn-default" id="12">
+                      <input type="radio"> 12
+                    </label>
+                    <label class="btn btn-default" id="13">
+                      <input type="radio"> 13
+                    </label>
+                    <label class="btn btn-default" id="14">
+                      <input type="radio"> 14
+                    </label>
+                    <label class="btn btn-default" id="15">
+                      <input type="radio"> 15
+                    </label>
+                    <label class="btn btn-default" id="16">
+                      <input type="radio"> 16
+                    </label>
+                    <label class="btn btn-default" id="17">
+                      <input type="radio"> 17
+                    </label>
+                    <label class="btn btn-default" id="18">
+                      <input type="radio"> 18
+                    </label>
+                    <label class="btn btn-default" id="19">
+                      <input type="radio"> 19
+                    </label>
+                    <label class="btn btn-default" id="20">
+                      <input type="radio"> 20
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" id="answers_authors">
+          <div id="authorSelect" style="display:none">
+          <h4>Author:</h4>
+            <div class="btn-group" data-toggle="buttons">
+              <div data-toggle="buttons" id="author_buttons">
+                    <div class="btn-group btn-group-justified">
+                      <label class="btn btn-default active" id="author_blank">
+                        <input type="radio"> Leave Blank
+                      </label>
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                      <label class="btn btn-default" id="A">
+                        <input type="radio"> A
+                      </label>
+                      <label class="btn btn-default" id="B">
+                        <input type="radio"> B
+                      </label>
+                      <label class="btn btn-default" id="C">
+                        <input type="radio"> C
+                      </label>
+                      <label class="btn btn-default" id="D">
+                        <input type="radio"> D
+                      </label>
+                      <label class="btn btn-default" id="E">
+                        <input type="radio"> E
+                      </label>
+                      <label class="btn btn-default" id="F">
+                        <input type="radio"> F
+                      </label>
+                      <label class="btn btn-default" id="G">
+                        <input type="radio"> G
+                      </label>
+                      <label class="btn btn-default" id="H">
+                        <input type="radio"> H
+                      </label>
+                      <label class="btn btn-default" id="I">
+                        <input type="radio"> I
+                      </label>
+                      <label class="btn btn-default" id="J">
+                        <input type="radio"> J
+                      </label>
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                      <label class="btn btn-default" id="K">
+                        <input type="radio"> K
+                      </label>
+                      <label class="btn btn-default" id="L">
+                        <input type="radio"> L
+                      </label>
+                      <label class="btn btn-default" id="M">
+                        <input type="radio"> M
+                      </label>
+                      <label class="btn btn-default" id="N">
+                        <input type="radio"> N
+                      </label>
+                      <label class="btn btn-default" id="O">
+                        <input type="radio"> O
+                      </label>
+                      <label class="btn btn-default" id="P">
+                        <input type="radio"> P
+                      </label>
+                      <label class="btn btn-default" id="Q">
+                        <input type="radio"> Q
+                      </label>
+                      <label class="btn btn-default" id="R">
+                        <input type="radio"> R
+                      </label>
+                      <label class="btn btn-default" id="S">
+                        <input type="radio"> S
+                      </label>
+                      <label class="btn btn-default" id="T">
+                        <input type="radio"> T
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-2 bg-success text-left" id="ref_authors">
+      <h4 id="authorRef" style="display:none">Author Names</h4>
+    </div>
+    <div class="col-xs-1"><!--spacer--></div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-1"><!--spacer--></div>
+    <div class="col-xs-2">
+      <div id="timer" style="display:none">
+        <h6>Timer</h6>
+        <p id="time"></p>
+      </div>
+    </div>
+    <div class="col-xs-6 bg-info">
+      <br>
+      <button type="button" class="btn btn-primary btn-block" id="submit" style="display:none">Submit Answer</button>
+      <button type="button" class="btn btn-success btn-block" id="newQuestion" style="display:none">Generate New Question</button>
+      <br>
+    </div>
+    <div class="col-xs-2">
+      <div id="score" style="display:none">
+        <div class="text-center" id="statistics_block_1">
+        </div>
+        <div class="text-center" id="statistics_block_2">
+        </div>
+        <div class="text-center" id="statistics_block_3">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-1"><!--spacer--></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-1"><!--spacer--></div>
+  <div class="col-xs-2"></div>
+  <div class="col-xs-6">
+    <div id="history" class="text-center" style="display:none">
+      <br>
+      <br>
+  </div>
+  <div class="col-xs-2"></div>
+  <div class="col-xs-1"><!--spacer--></div>
+</div>
+</div>
+
+<!--Link to info page-->
+<div style="position: fixed; top: 0; left: 0;">
+  <a href="about.html" target="_blank">About</a>
+  <p>
+    <button type="button" class="btn btn-block" id="option_button" style="display:block">Adv. Options</button>
+  </p>
+  <p>
+    <button type="button" class="btn btn-block" id="history_button" style="display:none">History Toggle</button>
+  </p>
+</div>
+    </body>
+</html>
